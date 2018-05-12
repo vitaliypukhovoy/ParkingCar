@@ -77,23 +77,21 @@ namespace ParkingCar
                 switch (arg.Unit)
                 {
                     case 3:
-                        //tranList.Add();
+                        
                         Console.WriteLine();
                         break;
                     case 30:
-
-                        //tranList.Count(i => i.WriteOffs);
+                       
                         Console.WriteLine();
                         break;
                 }
-
             };           
         }
     }
 
     class Car
     {
-        public int Id { get; set; }
+        public int IdCar { get; set; }
         public int Balance { get; set; }
         public CarType CType { get; set; }
 
