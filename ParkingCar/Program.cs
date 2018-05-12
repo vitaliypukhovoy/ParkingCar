@@ -10,8 +10,7 @@ namespace ParkingCar
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Settings.priceOfParking);
-
+            //Console.WriteLine(Settings.priceOfParking.FirstOrDefault(i=> (int)i.Key == 5));
         }
     }
 
@@ -38,17 +37,57 @@ namespace ParkingCar
     }
 
 
+    public class TransactEventHandler : EventArgs
+    {
+        public int Unit { get; set; }
+
+    }
+
+    public class CounterTran
+    {
+
+       public event EventHandler<TransactEventHandler> CounterEventHandler;
+
+       public  void CounterTranaction()
+        {
+            CounterEventHandler(this, new TransactEventHandler { Unit  = 3 });
+        }
+
+      public void CounterWriteToLog()
+        {
+            CounterEventHandler(this, new TransactEventHandler { Unit = 30 });
+
+        }
+    }
+
     class Parking
     {
         private List<Car> carList;
-        private List<Transaction> TranList;
+        private List<Transaction> tranList;
         private double Balance;
 
-        public Parking(List<Car> _carList, List<Transaction> _TranList, double _Balance)
+        public Parking(List<Car> _carList, List<Transaction> _tranList, CounterTran _counterTran)  // double _Balance)
         {
             carList = _carList;
-            TranList = _TranList;
-            Balance = _Balance;
+            tranList = _tranList;
+            //  Balance = _Balance;
+
+            _counterTran.CounterEventHandler += (Object sender, TransactEventHandler arg) =>
+            {
+                switch (arg.Unit)
+                {
+                    case 3:
+                        //tranList.Add();
+                        Console.WriteLine();
+                        break;
+                    case 30:
+
+                        //tranList.Count(i => i.WriteOffs);
+                        Console.WriteLine();
+                        break;
+                }
+
+            };           
         }
     }
 
@@ -66,13 +105,13 @@ namespace ParkingCar
         Truck = 2,
         Bus = 3,
         Motorcycle = 4,
-        Cars = 4
+        Cars = 5
     }
 
     class Transaction
     {
-        public DateTime DateTimeTran { get; set; }
         public int IdCar { get; set; }
-        public int MyProperty { get; set; }
+        public DateTime DateTimeTran { get; set; }       
+        public int WriteOffs { get; set; }
     }
 }

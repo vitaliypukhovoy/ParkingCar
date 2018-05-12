@@ -3,3 +3,4 @@ C:\Git\WebAPI\ParkingCar\ParkingCar\bin\Debug\ParkingCar.exe
 C:\Git\WebAPI\ParkingCar\ParkingCar\bin\Debug\ParkingCar.pdb
 C:\Git\WebAPI\ParkingCar\ParkingCar\obj\Debug\ParkingCar.exe
 C:\Git\WebAPI\ParkingCar\ParkingCar\obj\Debug\ParkingCar.pdb
+C:\Git\WebAPI\ParkingCar\ParkingCar\obj\Debug\ParkingCar.csprojResolveAssemblyReference.cache
