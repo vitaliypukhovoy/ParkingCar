@@ -3,25 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using System.Threading;
+using System.Timers;
 
 namespace ParkingCar
 {
     class Program
     {
         static void Main(string[] args)
-        {
-            //Console.WriteLine(Settings.priceOfParking.FirstOrDefault(i=> (int)i.Key == 5));
+        {           
+            var t = new CounterTran();
+            var p = new Parking(null, null, t);
+
+            t.WripperTime(1000);
+            t.WripperTime(3000);
+            Console.ReadKey();
         }
+
     }
 
-     static class   Settings
+    static class Settings
     {
-       static public int ParkingSpace { get; set; } //= 1125;
-       static public float Fine { get; set; } // = 0.2f;
-       static public int TimeOut { get; set; } // = 3;
+        static public int ParkingSpace { get; set; } //= 1125;
+        static public float Fine { get; set; } // = 0.2f;
+        static public int TimeOut { get; set; } // = 3;
 
-       static public Dictionary<CarType, int> priceOfParking;
-       static  Settings()
+        static public Dictionary<CarType, int> priceOfParking;
+        static Settings()
         {
             ParkingSpace = 1125;
             TimeOut = 3;
@@ -37,27 +45,34 @@ namespace ParkingCar
     }
 
 
-    public class TransactEventHandler : EventArgs
+    public class TransactEventHandler: EventArgs //ElapsedEventArgs
     {
-        public int Unit { get; set; }
-
-    }
-
-    public class CounterTran
-    {
-
-       public event EventHandler<TransactEventHandler> CounterEventHandler;
-
-       public  void CounterTranaction()
+        public TransactEventHandler(double signalTime)          
         {
-            CounterEventHandler(this, new TransactEventHandler { Unit  = 3 });
+            SignalTime = signalTime;
         }
+      public  double SignalTime { get; private set; } 
+     }
 
-      public void CounterWriteToLog()
+    public class CounterTran 
+    {       
+        public event EventHandler<TransactEventHandler> CounterEventHandler;// ElapsedEventHandler
+
+        public void WripperTime(double sec)
         {
-            CounterEventHandler(this, new TransactEventHandler { Unit = 30 });
+            Timer timer = new Timer();
+            timer.Interval = sec;
+            timer.Elapsed += (object sender, ElapsedEventArgs eplasedEventArg) =>
+           {
+               var handler = this.CounterEventHandler;
+               if (handler != null)
+               {
+                   CounterEventHandler(this, new TransactEventHandler(timer.Interval));
+               }
 
-        }
+           };
+            timer.Enabled = true;
+        }               
     }
 
     class Parking
@@ -70,22 +85,21 @@ namespace ParkingCar
         {
             carList = _carList;
             tranList = _tranList;
-            //  Balance = _Balance;
+            //  Balance = _Balance;           
 
             _counterTran.CounterEventHandler += (Object sender, TransactEventHandler arg) =>
             {
-                switch (arg.Unit)
-                {
-                    case 3:
-                        
-                        Console.WriteLine();
+                    switch ((int)arg.SignalTime)
+                    {
+                     case 1000:
+                        Console.WriteLine("It's a 1 sec");
+                        break;                    
+                    case 3000:
+
+                        Console.WriteLine("It's a 3 sec");
                         break;
-                    case 30:
-                       
-                        Console.WriteLine();
-                        break;
-                }
-            };           
+                    }
+            };
         }
     }
 
@@ -109,7 +123,7 @@ namespace ParkingCar
     class Transaction
     {
         public int IdCar { get; set; }
-        public DateTime DateTimeTran { get; set; }       
+        public DateTime DateTimeTran { get; set; }
         public int WriteOffs { get; set; }
     }
 }
