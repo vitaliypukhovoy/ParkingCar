@@ -4,11 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using ParkingCar.Infrastructure.Interface;
 using ParkingCar.Model;
+using System.Threading;
 
 namespace ParkingCar.Infrastructure.Classes
 {
     class Parking : IParking, IGetTransaction
     {
+        private static readonly Lazy<Parking> instance =
+        new Lazy<Parking>(() => new Parking(), LazyThreadSafetyMode.ExecutionAndPublication);
+
         private IWriringToFile writeToFile;
         private List<Transaction> tranList;
         private List<Car> carList;
@@ -52,6 +56,18 @@ namespace ParkingCar.Infrastructure.Classes
                     tranList.Clear();
                 }
             };
+        }
+
+        public static Parking Instance
+        {
+             get
+            {
+                return instance.Value;
+            }
+        }
+    
+        private Parking()
+        {
         }
         public Task<List<Transaction>> GetTranForMinute(List<Transaction> list)
         {
