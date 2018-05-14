@@ -30,10 +30,10 @@ namespace ParkingCar
             CounterTranHandler tran = new CounterTranHandler();
             Parking p = new Parking(writeToFile, cars, tranList, tran, price, timeOut, path);
             IGetTransaction _p = p;
-           
-                
 
 
+
+            CarType _type = CarType.Truck;
             Console.WriteLine("Please, Enter you add, del, start, stop, bal, tran,amount, space");
             var q = Console.ReadLine();
             while (true)
@@ -41,8 +41,34 @@ namespace ParkingCar
                 switch (q)
                 {
                     case "add":
+                        Console.WriteLine(" Please, enter CarType");
+                        Console.WriteLine("Do you want to enter Truck = 2, Car = 5, Bus =3, Motorcycle =4");
+                        var n = Console.ReadLine();
+                        switch (n)
+                        {
+                            case "2":
+                                _type = CarType.Truck;
+                                break;
+                            case "5":
+                                _type = CarType.Cars;
+                                break;
+                            case "3":
+                                _type = CarType.Bus;
+                                break;
+                            case "4":
+                                _type = CarType.Motorcycle;
+                                break;
+                        }
+                        Console.WriteLine("Enter balance car");
+                        var bc = Console.ReadLine();
+                        cars.Add(new Car {IdCar = cars.Count+1,CType= _type, Balance = int.Parse(bc)  });
+                        q = Console.ReadLine();
                         break;
                     case "del":
+                        Console.WriteLine(" Please, enter ID Car");
+                        var del = Console.ReadLine();
+                        cars.RemoveAt(int.Parse(del));
+                        q = Console.ReadLine();
                         break;
                     case "start":
                         Start(tran, true);
@@ -67,6 +93,8 @@ namespace ParkingCar
                     case "amout":
                         break;
                     case "space":
+                        Console.WriteLine(Settings.ParkingSpace-cars.Count);
+                        q = Console.ReadLine();
                         break;
                 }
             }
