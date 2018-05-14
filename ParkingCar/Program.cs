@@ -62,11 +62,3 @@ namespace ParkingCar
 
 
 
-// .ContinueWith((t) =>
-// t.Exception.Handle(ex =>
-// {
-//     Console.WriteLine(ex.Message, ex);
-//     return false;
-// })
-//, TaskContinuationOptions.OnlyOnFaulted
-// );
