@@ -7,11 +7,11 @@ namespace ParkingCar.Infrastructure.Classes
     {
         public event EventHandler<TransactEventHandler> CounterEventHandler;// ElapsedEventHandler
 
-        public void WripperTime(double sec)
+        public void WripperTime(double sec, bool enableTimer)
         {
             Timer timer = new Timer();
             timer.Interval = sec;
-            timer.Enabled = true;
+            timer.Enabled = enableTimer;
             timer.Elapsed += (object sender, ElapsedEventArgs eplasedEventArg) =>
             {
                 var handler = this.CounterEventHandler;
@@ -19,7 +19,7 @@ namespace ParkingCar.Infrastructure.Classes
                 {
                     CounterEventHandler(this, new TransactEventHandler(timer.Interval));
                 }
-            };
-        }
+            };      
+       }
     }
 }

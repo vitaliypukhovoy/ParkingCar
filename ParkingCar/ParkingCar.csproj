@@ -46,7 +46,6 @@
     <Compile Include="Infrastructure\Classes\CounterTranHandler.cs" />
     <Compile Include="Infrastructure\Classes\Parking.cs" />
     <Compile Include="Infrastructure\Classes\Settings.cs" />
-    <Compile Include="Infrastructure\Classes\Singleton.cs" />
     <Compile Include="Infrastructure\Classes\TransactEventHandler.cs" />
     <Compile Include="Infrastructure\Classes\WriringToFile.cs" />
     <Compile Include="Infrastructure\Interface\IGetTransaction.cs" />

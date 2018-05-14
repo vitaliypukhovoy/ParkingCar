@@ -27,9 +27,10 @@ namespace ParkingCar
             List<Transaction> tranList = new List<Transaction>();
             var tran = new CounterTranHandler();
             var p = new Parking(writeToFile, cars, tranList, tran, price, timeOut, path);
-
-            tran.WripperTime(3000);
-            tran.WripperTime(30000);
+            
+             bool enableTimer = true;
+             Start(tran, enableTimer);
+            //Start(tran, false);
             var q = Console.ReadLine();
             switch (q)
             {
@@ -49,6 +50,12 @@ namespace ParkingCar
                     break;
             }
             Console.ReadKey();
+        }
+
+       public static void Start(CounterTranHandler tran, bool enableTimer)
+        {
+            tran.WripperTime(3000, enableTimer);
+            tran.WripperTime(30000, enableTimer);
         }
     }
 }
