@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Infrastructure\Classes\CounterTran.cs" />
+    <Compile Include="Infrastructure\Classes\CounterTranHandler.cs" />
     <Compile Include="Infrastructure\Classes\Parking.cs" />
     <Compile Include="Infrastructure\Classes\Settings.cs" />
     <Compile Include="Infrastructure\Classes\TransactEventHandler.cs" />

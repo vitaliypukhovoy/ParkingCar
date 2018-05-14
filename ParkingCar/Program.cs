@@ -25,7 +25,7 @@ namespace ParkingCar
 
             var writeToFile = new WriringToFile(path, cars);
             List<Transaction> tranList = new List<Transaction>();
-            var tran = new CounterTran();
+            var tran = new CounterTranHandler();
             var p = new Parking(writeToFile, cars, tranList, tran, price, timeOut, path);
 
             tran.WripperTime(3000);

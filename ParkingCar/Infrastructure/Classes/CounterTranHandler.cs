@@ -3,7 +3,7 @@ using System.Timers;
 
 namespace ParkingCar.Infrastructure.Classes
 {
-    public class CounterTran
+    public class CounterTranHandler
     {
         public event EventHandler<TransactEventHandler> CounterEventHandler;// ElapsedEventHandler
 

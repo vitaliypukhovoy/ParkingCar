@@ -9,6 +9,7 @@ namespace ParkingCar.Infrastructure.Classes
 {
     class Parking : IParking, IGetTransaction
     {
+        private IWriringToFile writeToFile;
         private List<Transaction> tranList;
         private List<Car> carList;
         private static double balance;
@@ -16,16 +17,19 @@ namespace ParkingCar.Infrastructure.Classes
         private int timeOut = Settings.TimeOut;
         private string path;
 
-        public Parking(IWriringToFile WriteToFile,
+        public Parking(IWriringToFile _writeToFile,
                        List<Car> _carList,
                        List<Transaction> _tranList,
-                       CounterTran _counterTran,
-                       Dictionary<CarType, int> price,
+                       CounterTranHandler _counterTran,
+                       Dictionary<CarType, int> _price,
                        int _timeOut,
-                       string path)
+                       string _path)
         {
+            writeToFile = _writeToFile;
             carList = _carList;
             tranList = _tranList;
+            price = _price;
+            path = _path;
 
             _counterTran.CounterEventHandler += (Object sender, TransactEventHandler arg) =>
             {
@@ -44,7 +48,7 @@ namespace ParkingCar.Infrastructure.Classes
                 else
                 {
                     Console.WriteLine("It's a 10 sec");
-                    WriteToFile.PushToFile(tranList, path, balance);
+                    writeToFile.PushToFile(tranList, path, balance);
                     tranList.Clear();
                 }
             };
