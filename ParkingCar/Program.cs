@@ -11,12 +11,43 @@ namespace ParkingCar
     class Program
     {
         static void Main(string[] args)
-        {           
-            var t = new CounterTran();
-            var p = new Parking(null, null, t);
+        {
 
-            t.WripperTime(1000);
+            List<Car> c = new List<Car>
+            {
+                new Car {IdCar=1,CType=CarType.Truck, Balance=5000 },
+            new Car { IdCar=2,CType=CarType.Cars, Balance=2000},
+            new Car { IdCar=3,CType=CarType.Bus, Balance=3000},
+            new Car { IdCar=3,CType=CarType.Truck, Balance=5000}
+           };
+          
+
+             List<Transaction> tranList = new List<Transaction>();
+            var t = new CounterTran();
+            var p = new Parking(c, tranList, t);
+
             t.WripperTime(3000);
+            t.WripperTime(10000);
+             var q =Console.ReadLine();
+            switch (q) {
+                case "add":
+                       break;
+                case "del":
+                    break;
+                case "start":
+                    break;
+                case "bal":
+                    break;
+                case "tran":
+                    break;
+                case "amout":
+                    break;
+                case "space":
+                    break;
+            }
+                    
+
+
             Console.ReadKey();
         }
 
@@ -32,11 +63,11 @@ namespace ParkingCar
         static Settings()
         {
             ParkingSpace = 1125;
-            TimeOut = 3;
+            TimeOut = 3000;
             Fine = 0.2f;
             priceOfParking = new Dictionary<CarType, int>
             {
-                {CarType.Truck, 1 },
+                {CarType.Truck, 5 },
                 {CarType.Cars, 3 },
                 {CarType.Bus, 2 },
                 {CarType.Motorcycle, 1 }
@@ -62,6 +93,7 @@ namespace ParkingCar
         {
             Timer timer = new Timer();
             timer.Interval = sec;
+            timer.Enabled = true;
             timer.Elapsed += (object sender, ElapsedEventArgs eplasedEventArg) =>
            {
                var handler = this.CounterEventHandler;
@@ -71,35 +103,47 @@ namespace ParkingCar
                }
 
            };
-            timer.Enabled = true;
+            
         }               
     }
 
     class Parking
     {
-        private List<Car> carList;
         private List<Transaction> tranList;
+        private List<Car> carList;       
         private double Balance;
+        Dictionary<CarType, int> item = Settings.priceOfParking;
+        int TimeOut = Settings.TimeOut;
 
-        public Parking(List<Car> _carList, List<Transaction> _tranList, CounterTran _counterTran)  // double _Balance)
+        public Parking(List<Car> _carList, List<Transaction> _tranList, CounterTran _counterTran)  
         {
             carList = _carList;
             tranList = _tranList;
-            //  Balance = _Balance;           
 
             _counterTran.CounterEventHandler += (Object sender, TransactEventHandler arg) =>
             {
-                    switch ((int)arg.SignalTime)
-                    {
-                     case 1000:
-                        Console.WriteLine("It's a 1 sec");
-                        break;                    
-                    case 3000:
 
-                        Console.WriteLine("It's a 3 sec");
-                        break;
+                if (TimeOut == (int)arg.SignalTime)
+                {
+                    foreach (Car c in carList)
+                    {
+                        var value = item.FirstOrDefault(i => i.Key == c.CType).Value;
+                       c.Balance =  c.Balance - value; 
+                        Balance += value;
+                        tranList.Add(new Transaction { IdCar = c.IdCar, DateTimeTran = DateTime.Now, WriteOffs = value });
                     }
+                    Console.WriteLine("It's a 1 sec{0}", Balance);
+                }
+                else
+
+                    Console.WriteLine("It's a 3 sec");
             };
+                                                       
+        }
+
+        public void PushToList(Car c, int value)
+        {
+          
         }
     }
 
@@ -121,7 +165,7 @@ namespace ParkingCar
     }
 
     class Transaction
-    {
+    {       
         public int IdCar { get; set; }
         public DateTime DateTimeTran { get; set; }
         public int WriteOffs { get; set; }
