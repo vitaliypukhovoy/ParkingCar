@@ -47,11 +47,11 @@ namespace ParkingCar.Infrastructure.Classes
                         balance += value;
                         tranList.Add(new Transaction { IdCar = c.IdCar, DateTimeTran = DateTime.Now, WriteOffs = value });
                     }
-                    Console.WriteLine("It's a 3 sec{0}", balance);
+                    //Console.WriteLine("It's a 3 sec{0}", balance);
                 }
                 else
                 {
-                    Console.WriteLine("It's a 10 sec");
+                    //Console.WriteLine("It's a 10 sec");
                     writeToFile.PushToFile(tranList, path, balance);
                     tranList.Clear();
                 }
@@ -73,7 +73,7 @@ namespace ParkingCar.Infrastructure.Classes
         {
             var task = Task<List<Transaction>>.Run(() =>
             {
-                var ls = list.Where(i => i.DateTimeTran.Minute - 1 == DateTime.Now.Minute)
+                var ls = list.Where(i => i.DateTimeTran.Minute  == DateTime.Now.Minute)
                       .Select(i => i).ToList();
                 return ls;
             });
