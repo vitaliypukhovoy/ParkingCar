@@ -30,6 +30,8 @@ namespace ParkingCar
             CounterTranHandler tran = new CounterTranHandler();
             Parking p = new Parking(writeToFile, cars, tranList, tran, price, timeOut, path);
             IGetTransaction _p = p;
+           
+                
 
 
             Console.WriteLine("Please, Enter you add, del, start, stop, bal, tran,amount, space");
@@ -51,6 +53,8 @@ namespace ParkingCar
                         q = Console.ReadLine();
                         break;
                     case "bal":
+                        Console.WriteLine(Parking.balance);
+                        q = Console.ReadLine();
                         break;
                     case "tran":
                         var list = ShowTranForMinute(_p, tranList).Result;

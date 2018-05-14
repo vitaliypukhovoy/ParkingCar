@@ -16,7 +16,7 @@ namespace ParkingCar.Infrastructure.Classes
         private IWriringToFile writeToFile;
         private List<Transaction> tranList;
         private List<Car> carList;
-        private static double balance;
+        public static double balance;
         private Dictionary<CarType, int> price;
         private int timeOut = Settings.TimeOut;
         private string path;
