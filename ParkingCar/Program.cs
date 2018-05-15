@@ -15,7 +15,7 @@ namespace ParkingCar
 
             Dictionary<CarType, int> price = Settings.priceOfParking;
             int timeOut = Settings.TimeOut;
-            string path = "Data\\Transactions.log";
+            string path = Settings.Path;
 
             List<Car> cars = new List<Car>
             {

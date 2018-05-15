@@ -51,8 +51,8 @@ namespace ParkingCar.Infrastructure.Classes
         public Task<string> GetTargetPath(string path)
         {
             var task = Task<string>.Run(() =>
-            {
-                var dir = Directory.GetCurrentDirectory().TrimEnd("bin\\Debug".ToArray());
+            {                
+                var dir =  Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
                 string targetPath = Path.Combine(dir, Path.GetDirectoryName(path) + "\\" + Path.GetFileName(path));
                 return targetPath;
             });
