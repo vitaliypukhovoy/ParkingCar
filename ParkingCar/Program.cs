@@ -96,6 +96,10 @@ namespace ParkingCar
                         Console.WriteLine(Settings.ParkingSpace-cars.Count);
                         q = Console.ReadLine();
                         break;
+                    default:
+                        Console.WriteLine("You are entered fault command");
+                        q = Console.ReadLine();
+                        break;                       
                 }
             }
             Console.ReadKey();
