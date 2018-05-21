@@ -83,7 +83,7 @@ namespace ParkingCar
                         q = Console.ReadLine();
                         break;
                     case "tran":
-                        var list = ShowTranForMinute(_p, tranList).Result;
+                        var list = p.GetTranForMinute(tranList).Result; 
                         foreach (var i in list)
                         {
                             Console.WriteLine("{0}   {1}   {2}", i.DateTimeTran, i.IdCar, i.WriteOffs);
@@ -110,27 +110,7 @@ namespace ParkingCar
             tran.WripperTime(3000, enableTimer);
             tran.WripperTime(30000, enableTimer);
         }
-
-        public static async Task<List<Transaction>> ShowTranForMinute(IGetTransaction p, List<Transaction> list)
-        {
-            var tranForMinute = p.GetTranForMinute(list);
-            Task tasks = Task.WhenAll(tranForMinute);
-
-            try
-            {
-                await tasks;
-            }
-            catch (AggregateException aex)
-            {
-                aex.Flatten().Handle(ex =>
-                {
-                    Console.WriteLine(ex.Message);
-                    return true;
-                });
-            }
-            return await tranForMinute;
-        }
-
+  
     }
 }
 

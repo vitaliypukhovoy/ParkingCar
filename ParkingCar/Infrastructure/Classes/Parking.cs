@@ -69,15 +69,15 @@ namespace ParkingCar.Infrastructure.Classes
         private Parking()
         {
         }
-        public Task<List<Transaction>> GetTranForMinute(List<Transaction> list)
+        public async Task<List<Transaction>> GetTranForMinute(List<Transaction> list)
         {
-            var task = Task<List<Transaction>>.Run(() =>
-            {
-                var ls = list.Where(i => i.DateTimeTran.Minute  == DateTime.Now.Minute)
-                      .Select(i => i).ToList();
-                return ls;
-            });
-            return task;
+            return await Task.Run(() =>
+           {
+               var ls = list.Where(i => i.DateTimeTran.Minute == DateTime.Now.Minute)
+                     .Select(i => i).ToList();
+               return ls;
+           });
+            
         }
     }
 }
