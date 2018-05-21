@@ -35,9 +35,11 @@ namespace ParkingCar
 
             CarType _type = CarType.Truck;
             Console.WriteLine("Please, Enter you add, del, start, stop, bal, tran,amount, space");
-            var q = Console.ReadLine();
-            while (true)
+
+           
+            do
             {
+                var q = Console.ReadLine();
                 switch (q)
                 {
                     case "add":
@@ -61,47 +63,39 @@ namespace ParkingCar
                         }
                         Console.WriteLine("Enter balance car");
                         var bc = Console.ReadLine();
-                        cars.Add(new Car {IdCar = cars.Count+1,CType= _type, Balance = int.Parse(bc)  });
-                        q = Console.ReadLine();
+                        cars.Add(new Car { IdCar = cars.Count + 1, CType = _type, Balance = int.Parse(bc) });                      
                         break;
                     case "del":
                         Console.WriteLine(" Please, enter ID Car");
                         var del = Console.ReadLine();
-                        cars.RemoveAt(int.Parse(del));
-                        q = Console.ReadLine();
+                        cars.RemoveAt(int.Parse(del));                     
                         break;
                     case "start":
-                        Start(tran, true);
-                        q = Console.ReadLine();
+                        Start(tran, true);                     
                         break;
                     case "stop":
-                        Start(tran, false);
-                        q = Console.ReadLine();
+                        Start(tran, false);                   
                         break;
                     case "bal":
-                        Console.WriteLine(Parking.balance);
-                        q = Console.ReadLine();
+                        Console.WriteLine(Parking.balance);                
                         break;
                     case "tran":
-                        var list = p.GetTranForMinute(tranList).Result; 
+                        var list = p.GetTranForMinute(tranList).GetAwaiter().GetResult();
                         foreach (var i in list)
                         {
                             Console.WriteLine("{0}   {1}   {2}", i.DateTimeTran, i.IdCar, i.WriteOffs);
-                        }
-                        q = Console.ReadLine();
+                        }                   
                         break;
                     case "amout":
                         break;
                     case "space":
-                        Console.WriteLine(Settings.ParkingSpace-cars.Count);
-                        q = Console.ReadLine();
+                        Console.WriteLine(Settings.ParkingSpace - cars.Count);                   
                         break;
                     default:
-                        Console.WriteLine("You are entered fault command");
-                        q = Console.ReadLine();
-                        break;                       
+                        Console.WriteLine("You are entered fault command");                   
+                        break;
                 }
-            }
+            } while (true);
             Console.ReadKey();
         }
 

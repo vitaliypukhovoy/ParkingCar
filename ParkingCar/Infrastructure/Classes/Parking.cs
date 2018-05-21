@@ -51,7 +51,7 @@ namespace ParkingCar.Infrastructure.Classes
                 }
                 else
                 {
-                    //Console.WriteLine("It's a 10 sec");
+                    //Console.WriteLine("It's a 30 sec");
                     writeToFile.PushToFile(tranList, path, balance);
                     tranList.Clear();
                 }
@@ -76,8 +76,9 @@ namespace ParkingCar.Infrastructure.Classes
                var ls = list.Where(i => i.DateTimeTran.Minute == DateTime.Now.Minute)
                      .Select(i => i).ToList();
                return ls;
-           });
-            
+           })           
+           .ConfigureAwait(false);
+          
         }
     }
 }
